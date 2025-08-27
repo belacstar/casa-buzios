@@ -6,4 +6,18 @@
     .input {
         @apply border border-white/40 p-2 rounded-xl bg-white/80 w-full text-textPrimary placeholder:text-textSecondary;
     }
+
+    .my-masonry-grid {
+        display: flex;
+        margin-left: -16px;
+        /* gutter size offset */
+        width: auto;
+    }
+
+    .my-masonry-grid_column {
+        padding-left: 16px;
+        /* gutter size */
+        background-clip: padding-box;
+    }
+
 }

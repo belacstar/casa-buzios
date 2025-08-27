@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { FaWifi, FaSwimmer, FaUtensils } from "react-icons/fa";
-import { MdOutlineBalcony } from "react-icons/md";
+import { FaWifi, FaUtensils, FaCar, FaShieldAlt, FaWineBottle, FaUmbrellaBeach, FaBed, FaBroom, FaHotTub, FaSnowflake, FaGamepad, FaBath } from "react-icons/fa";
+import { MdOutlinePool, MdOutdoorGrill } from "react-icons/md";
 import { PiBroomFill } from "react-icons/pi";
 import { FaChevronLeft, FaChevronRight, FaPlay, FaPause } from "react-icons/fa";
 import logoHorizontal from '../assets/img/logo-horizontal.png';
@@ -52,26 +52,54 @@ function Home() {
             </div>
 
             {/* Destaques */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 text-center max-w-5xl mx-auto mb-16">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-center max-w-5xl mx-auto mb-16">
                 <div className="flex flex-col items-center gap-2">
-                    <FaWifi className="text-3xl text-primary" />
-                    <span className="text-sm">Wi-Fi</span>
+                    <FaUmbrellaBeach className="text-2xl sm:text-3xl text-primary" />
+                    <span className="text-sm">Casa à Beira da Praia</span>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                    <FaSwimmer className="text-3xl text-primary" />
-                    <span className="text-sm">Piscina</span>
+                    <FaBed className="text-2xl sm:text-3xl text-primary" />
+                    <span className="text-sm">Suítes Privativas</span>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                    <MdOutlineBalcony className="text-3xl text-primary" />
-                    <span className="text-sm">Vista para o Mar</span>
+                    <FaBath className="text-2xl sm:text-3xl text-primary" />
+                    <span className="text-sm">Suíte Master com Hidro</span>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                    <FaUtensils className="text-3xl text-primary" />
+                    <FaSnowflake className="text-2xl sm:text-3xl text-primary" />
+                    <span className="text-sm">Ar-Condicionado</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                    <FaUtensils className="text-2xl sm:text-3xl text-primary" />
                     <span className="text-sm">Cozinha Equipada</span>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                    <PiBroomFill className="text-3xl text-primary" />
+                    <MdOutdoorGrill className="text-2xl sm:text-3xl text-primary" />
+                    <span className="text-sm">Churrasqueira</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                    <FaWineBottle className="text-2xl sm:text-3xl text-primary" />
+                    <span className="text-sm">Adega</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                    <PiBroomFill className="text-2xl sm:text-3xl text-primary" />
                     <span className="text-sm">Ambiente Limpo</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                    <FaCar className="text-2xl sm:text-3xl text-primary" />
+                    <span className="text-sm">Estacionamento</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                    <FaWifi className="text-2xl sm:text-3xl text-primary" />
+                    <span className="text-sm">Wi-Fi</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                    <FaShieldAlt className="text-2xl sm:text-3xl text-primary" />
+                    <span className="text-sm">Segurança 24h</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                    <MdOutlinePool className="text-2xl sm:text-3xl text-primary" />
+                    <span className="text-sm">Lazer Completo</span>
                 </div>
             </div>
 
@@ -167,11 +195,11 @@ function Home() {
             <div className="text-center">
                 <button
                     onClick={() => setModalAberto(true)}
-                    className="group relative hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-full font-medium text-sm text-white bg-primary hover:bg-secondary shadow-md transition-all duration-300 overflow-hidden"
+                    className="group relative inline-flex items-center justify-center px-4 py-2 rounded-full font-medium text-sm text-white bg-primary hover:bg-secondary shadow-md transition-all duration-300 overflow-hidden"
                 >
                     <span className="absolute inset-0 bg-white opacity-10 group-hover:opacity-20 transition duration-500 rounded-full animate-pulse"></span>
                     <span className="relative z-10 flex items-center gap-2">
-                        FAÇA SUA RESERVA
+                        Entrar em Contato!
                         <svg
                             className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
                             fill="none"
