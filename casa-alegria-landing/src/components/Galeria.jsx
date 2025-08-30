@@ -1,4 +1,32 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+// Estilo customizado para as setas do Swiper
+const swiperArrowStyle = `
+    .swiper-button-next, .swiper-button-prev {
+        color: #2563eb !important; /* azul destaque */
+        background: rgba(255,255,255,0.85);
+        border-radius: 9999px;
+        width: 48px;
+        height: 48px;
+        box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+        top: 45%;
+        transition: background 0.2s, color 0.2s;
+        z-index: 20;
+    }
+    .swiper-button-next:hover, .swiper-button-prev:hover {
+        background: #2563eb;
+        color: #fff !important;
+    }
+    .swiper-button-next:after, .swiper-button-prev:after {
+        font-size: 2rem !important;
+        font-weight: bold;
+    }
+`;
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
@@ -114,6 +142,7 @@ export default function Galeria() {
     const [lightboxIndex, setLightboxIndex] = useState(null);
     const [categoriaSelecionada, setCategoriaSelecionada] = useState(0); // índice da categoria
 
+
     // Flat list para lightbox global
     const imagensAtuais = categorias[categoriaSelecionada].imagens;
     const globalOffset = categorias
@@ -124,6 +153,8 @@ export default function Galeria() {
 
     return (
         <section id="galeria" className="w-full py-12 bg-gradient-to-b from-white/80 to-blue-50/60">
+            {/* Estilo customizado para as setas do Swiper */}
+            <style>{swiperArrowStyle}</style>
             <div className="max-w-6xl mx-auto px-4">
                 <h2 className="text-3xl font-bold text-primary text-center mb-8 drop-shadow">Galeria</h2>
 
@@ -141,23 +172,35 @@ export default function Galeria() {
                     ))}
                 </div>
 
-                {/* Grid responsivo de imagens da categoria selecionada */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {/* Carrossel responsivo de imagens da categoria selecionada */}
+                <Swiper
+                    modules={[Navigation, Pagination]}
+                    navigation
+                    pagination={{ clickable: true }}
+                    spaceBetween={16}
+                    slidesPerView={1}
+                    breakpoints={{
+                        640: { slidesPerView: 2 },
+                        1024: { slidesPerView: 3 },
+                    }}
+                    className="w-full pb-8"
+                >
                     {imagensAtuais.map((img, idx) => (
-                        <div
-                            key={img.alt}
-                            className="rounded-xl overflow-hidden shadow-lg cursor-pointer group transition-all duration-300"
-                            onClick={() => openLightbox(idx)}
-                        >
-                            <img
-                                src={img.src}
-                                alt={img.alt}
-                                className="w-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                loading="lazy"
-                            />
-                        </div>
+                        <SwiperSlide key={img.alt}>
+                            <div
+                                className="rounded-xl overflow-hidden shadow-lg cursor-pointer group transition-all duration-300 h-full flex items-center justify-center"
+                                onClick={() => openLightbox(idx)}
+                            >
+                                <img
+                                    src={img.src}
+                                    alt={img.alt}
+                                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                                    loading="lazy"
+                                />
+                            </div>
+                        </SwiperSlide>
                     ))}
-                </div>
+                </Swiper>
 
                 <p className="text-center text-blue-900/70 mt-4 text-sm">Clique em uma foto para ampliar.</p>
 

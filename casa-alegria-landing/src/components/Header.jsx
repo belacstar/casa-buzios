@@ -33,6 +33,7 @@ function Header() {
                 {/* Navegação Desktop */}
                 <nav className="hidden md:flex flex-1 justify-center">
                     <div className="flex gap-8 font-semibold text-primary tracking-wide px-6 py-2 rounded-full bg-white/70 backdrop-blur-md shadow-sm">
+                        <Link to="/" className="hover:text-secondary transition duration-300">Home</Link>
                         <Link to="/casa" className="hover:text-secondary transition duration-300">A Casa</Link>
                         <Link to="/galeria" className="hover:text-secondary transition duration-300">Galeria</Link>
                     </div>
@@ -86,6 +87,7 @@ function Header() {
                 `}
             >
                 <div className="flex flex-col items-center text-center px-6 pb-4 pt-3 space-y-3 text-primary font-semibold text-base bg-white/80 backdrop-blur-lg shadow-md rounded-b-xl transition-opacity duration-500">
+                    <Link to="/" className="block hover:text-secondary transition" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
                     <Link to="/casa" className="block hover:text-secondary transition" onClick={() => setIsMobileMenuOpen(false)}>A Casa</Link>
                     <Link to="/galeria" className="block hover:text-secondary transition" onClick={() => setIsMobileMenuOpen(false)}>Galeria</Link>
                     <button
