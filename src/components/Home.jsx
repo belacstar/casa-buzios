@@ -9,7 +9,7 @@ import jantar from '../assets/destaque/sala-jantar-estrela.png';
 import deck from '../assets/destaque/area-deck-redinha2.png';
 import suite from '../assets/galeria/suite-master-mar.png';
 import piscina from '../assets/galeria/piscina2.png';
-import ReservaModal from "../components/ReservaModal";
+import ReservaModal from "./ReservaModal";
 
 function Home() {
     const [currentImage, setCurrentImage] = useState(0);

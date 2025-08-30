@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logoHorizontal from "../assets/img/logo-horizontal.png";
-import ReservaModal from "../components/ReservaModal";
+import ReservaModal from "./ReservaModal";
 
 function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
