@@ -20,7 +20,7 @@ function Header() {
         >
             <div className="max-w-7xl mx-auto px-4 py-1 flex items-center justify-between relative h-20">
                 {/* Logo */}
-                <a href="#home" className="relative flex items-center group flex-shrink-0">
+                <Link to="/" className="relative flex items-center group flex-shrink-0">
                     <span className="absolute inset-0 z-[-1] rounded-full blur-xl opacity-80 bg-white group-hover:blur-2xl group-hover:opacity-100 transition-all duration-500"></span>
                     <img
                         src={logoHorizontal}
@@ -28,7 +28,7 @@ function Header() {
                         className="h-12 lg:h-14 w-auto object-contain object-center brightness-[1.2] transition-all duration-500 ease-in-out leading-none"
                         style={{ display: 'block', verticalAlign: 'top' }}
                     />
-                </a>
+                </Link>
 
                 {/* Navegação Desktop */}
                 <nav className="hidden md:flex flex-1 justify-center">

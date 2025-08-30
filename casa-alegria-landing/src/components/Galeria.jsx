@@ -99,125 +99,65 @@ const categorias = [
     },
 ];
 
+
 // Flat list para navegação global
 const flatImages = categorias.flatMap((c) => c.imagens);
 
-// Decide classes de span para criar efeito mosaico (padrão simples)
-const getSpanClass = (index) => {
-    // padrão: esporadicamente tiles maiores
-    if (index % 11 === 0) return "col-span-2 row-span-2 sm:col-span-2 sm:row-span-2";
-    if (index % 7 === 0) return "col-span-2 row-span-1 sm:col-span-2";
-    if (index % 5 === 0) return "row-span-2 sm:row-span-2";
-    return "col-span-1 row-span-1";
-};
 
-const breakpointColumnsObj = {
-  default: 3,
-  1100: 2,
-  700: 1
-};
+// Não precisa mais do getSpanClass, grid será uniforme
+
+
+// Não precisa mais do Masonry breakpoints
+
 
 export default function Galeria() {
     const [lightboxIndex, setLightboxIndex] = useState(null);
-    const imgRef = useRef(null);
-    const lastTouch = useRef(null);
-    const lastDistance = useRef(null);
-    const [zoom, setZoom] = useState(1);
-    const [offset, setOffset] = useState({ x: 0, y: 0 });
+    const [categoriaSelecionada, setCategoriaSelecionada] = useState(0); // índice da categoria
 
-    useEffect(() => {
-        setZoom(1);
-        setOffset({ x: 0, y: 0 });
-    }, [lightboxIndex]);
+    // Flat list para lightbox global
+    const imagensAtuais = categorias[categoriaSelecionada].imagens;
+    const globalOffset = categorias
+        .slice(0, categoriaSelecionada)
+        .reduce((acc, cat) => acc + cat.imagens.length, 0);
 
-    // Pinch-to-zoom e arrastar
-    const onTouchStart = (e) => {
-        if (e.touches.length === 2) {
-            const [a, b] = e.touches;
-            lastDistance.current = Math.hypot(
-                b.pageX - a.pageX,
-                b.pageY - a.pageY
-            );
-        } else if (e.touches.length === 1) {
-            lastTouch.current = { x: e.touches[0].pageX, y: e.touches[0].pageY };
-        }
-    };
-
-    const onTouchMove = (e) => {
-        if (e.touches.length === 2) {
-            const [a, b] = e.touches;
-            const dist = Math.hypot(b.pageX - a.pageX, b.pageY - a.pageY);
-            if (lastDistance.current) {
-                let newZoom = zoom * (dist / lastDistance.current);
-                newZoom = Math.max(1, Math.min(newZoom, 4));
-                setZoom(newZoom);
-            }
-            lastDistance.current = dist;
-        } else if (e.touches.length === 1 && zoom > 1) {
-            const touch = e.touches[0];
-            if (lastTouch.current) {
-                setOffset((prev) => ({
-                    x: prev.x + (touch.pageX - lastTouch.current.x),
-                    y: prev.y + (touch.pageY - lastTouch.current.y),
-                }));
-            }
-            lastTouch.current = { x: touch.pageX, y: touch.pageY };
-        }
-    };
-
-    const onTouchEnd = (e) => {
-        if (e.touches.length < 2) lastDistance.current = null;
-        if (e.touches.length === 0) lastTouch.current = null;
-    };
-
-    const openLightbox = (index) => setLightboxIndex(index);
-    const closeLightbox = () => setLightboxIndex(null);
-    const next = (e) => {
-        e.stopPropagation();
-        setLightboxIndex((i) => (i + 1) % flatImages.length);
-    };
-    const prev = (e) => {
-        e.stopPropagation();
-        setLightboxIndex((i) => (i - 1 + flatImages.length) % flatImages.length);
-    };
+    const openLightbox = (index) => setLightboxIndex(index + globalOffset);
 
     return (
         <section id="galeria" className="w-full py-12 bg-gradient-to-b from-white/80 to-blue-50/60">
             <div className="max-w-6xl mx-auto px-4">
                 <h2 className="text-3xl font-bold text-primary text-center mb-8 drop-shadow">Galeria</h2>
 
-                {categorias.map((cat) => (
-                    <div key={cat.nome} className="mb-10">
-                        <h3 className="text-xl font-semibold text-primary mb-4 mt-8">{cat.nome}</h3>
+                {/* Abas de categorias */}
+                <div className="flex flex-wrap justify-center gap-2 mb-8">
+                    {categorias.map((cat, idx) => (
+                        <button
+                            key={cat.nome}
+                            className={`px-4 py-2 rounded-full font-semibold text-sm transition-all duration-200 shadow-sm border 
+                                ${idx === categoriaSelecionada ? 'bg-primary text-white border-primary' : 'bg-white/80 text-primary border-primary/30 hover:bg-primary/10'}`}
+                            onClick={() => setCategoriaSelecionada(idx)}
+                        >
+                            {cat.nome}
+                        </button>
+                    ))}
+                </div>
 
-                        {/* Grid com 4 colunas em md para efeito mosaico */}
-                        <div className="flex flex-col gap-6">
-                          <Masonry
-                            breakpointCols={breakpointColumnsObj}
-                            className="my-masonry-grid"
-                            columnClassName="my-masonry-grid_column"
-                          >
-                            {cat.imagens.map((img) => {
-                              const globalIndex = flatImages.indexOf(img);
-                              return (
-                                <div
-                                  key={img.alt}
-                                  className="rounded-xl overflow-hidden shadow-lg cursor-pointer group transition-all duration-300 mb-6"
-                                  onClick={() => openLightbox(globalIndex)}
-                                >
-                                  <img
-                                    src={img.src}
-                                    alt={img.alt}
-                                    className="w-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                    loading="lazy"
-                                  />
-                                </div>
-                              );
-                            })}
-                          </Masonry>
+                {/* Grid responsivo de imagens da categoria selecionada */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    {imagensAtuais.map((img, idx) => (
+                        <div
+                            key={img.alt}
+                            className="rounded-xl overflow-hidden shadow-lg cursor-pointer group transition-all duration-300"
+                            onClick={() => openLightbox(idx)}
+                        >
+                            <img
+                                src={img.src}
+                                alt={img.alt}
+                                className="w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                loading="lazy"
+                            />
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
 
                 <p className="text-center text-blue-900/70 mt-4 text-sm">Clique em uma foto para ampliar.</p>
 
