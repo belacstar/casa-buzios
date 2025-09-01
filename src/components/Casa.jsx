@@ -26,15 +26,12 @@ export default function Casa() {
     const [openReserva, setOpenReserva] = useState(false);
 
     return (
-        <section className="relative max-w-6xl mx-auto py-14 px-4">
+        <section className="relative max-w-6xl mx-auto py-14 px-4 pt-28">
             {/* Fundo decorativo suave */}
             <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-10 h-40 bg-gradient-to-b from-primary/20 via-primary/10 to-transparent blur-3xl opacity-40" />
 
             {/* Header */}
             <div className="text-center space-y-4 mb-10">
-                <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary ring-1 ring-primary/20">
-                    Frente ao mar em Manguinhos
-                </span>
                 <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight">
                     <span className="bg-gradient-to-r from-primary to-rose-500 bg-clip-text text-transparent">
                         Casa Alegria

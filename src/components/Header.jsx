@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import logoHorizontal from "../assets/img/logo-horizontal.png";
-import ReservaModal from "./ReservaModal";
+
+// Lazy load do modal que só é usado quando necessário
+const ReservaModal = lazy(() => import("../components/ReservaModal"));
 
 function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -27,6 +29,9 @@ function Header() {
                         alt="Casa Alegria Logo"
                         className="h-12 lg:h-14 w-auto object-contain object-center brightness-[1.2] transition-all duration-500 ease-in-out leading-none"
                         style={{ display: 'block', verticalAlign: 'top' }}
+                        loading="eager"
+                        fetchpriority="high"
+                        decoding="async"
                     />
                 </Link>
 
@@ -75,10 +80,14 @@ function Header() {
                     )}
                 </button>
 
-                <ReservaModal isOpen={modalAberto} onClose={() => setModalAberto(false)} />
+                {modalAberto && (
+                    <Suspense fallback={<div>Carregando...</div>}>
+                        <ReservaModal isOpen={modalAberto} onClose={() => setModalAberto(false)} />
+                    </Suspense>
+                )}
             </div>
 
-            {/* Mobile Menu */}
+            {/* Mobile Menu - Links com área clicável completa */}
             <div
                 className={`
                     md:hidden absolute top-full left-0 w-full z-40
@@ -86,13 +95,32 @@ function Header() {
                     ${isMobileMenuOpen ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-4 opacity-0 pointer-events-none'}
                 `}
             >
-                <div className="flex flex-col items-center text-center px-6 pb-4 pt-3 space-y-3 text-primary font-semibold text-base bg-white/80 backdrop-blur-lg shadow-md rounded-b-xl transition-opacity duration-500">
-                    <Link to="/" className="block hover:text-secondary transition" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-                    <Link to="/casa" className="block hover:text-secondary transition" onClick={() => setIsMobileMenuOpen(false)}>A Casa</Link>
-                    <Link to="/galeria" className="block hover:text-secondary transition" onClick={() => setIsMobileMenuOpen(false)}>Galeria</Link>
+                <div className="flex flex-col text-center px-4 pb-4 pt-3 text-primary font-semibold text-base bg-white/80 backdrop-blur-lg shadow-md rounded-b-xl transition-opacity duration-500">
+                    {/* Links com área clicável completa */}
+                    <Link
+                        to="/"
+                        className="w-full py-4 px-6 hover:text-secondary hover:bg-white/50 transition-all duration-300 rounded-lg"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        Home
+                    </Link>
+                    <Link
+                        to="/casa"
+                        className="w-full py-4 px-6 hover:text-secondary hover:bg-white/50 transition-all duration-300 rounded-lg"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        A Casa
+                    </Link>
+                    <Link
+                        to="/galeria"
+                        className="w-full py-4 px-6 hover:text-secondary hover:bg-white/50 transition-all duration-300 rounded-lg"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        Galeria
+                    </Link>
                     <button
                         onClick={() => { setModalAberto(true); setIsMobileMenuOpen(false); }}
-                        className="w-full mt-2 px-4 py-2 rounded-full font-medium text-sm text-white bg-primary hover:bg-secondary shadow-md transition-all duration-300"
+                        className="w-full mt-3 mx-4 px-4 py-3 rounded-full font-medium text-sm text-white bg-primary hover:bg-secondary shadow-md transition-all duration-300"
                     >
                         Entrar em Contato!
                     </button>

@@ -1,10 +1,12 @@
+import backgroundImage from '../assets/img/background_new.png';
+
 function BackgroundWrapper({ children }) {
     return (
         <div className="relative min-h-screen w-full bg-background text-textPrimary">
             {/* Imagem de fundo */}
             <div
                 className="absolute inset-0 bg-cover bg-no-repeat bg-center z-0"
-                style={{ backgroundImage: "url('/src/assets/img/background_new.png')" }}
+                style={{ backgroundImage: `url(${backgroundImage})` }}
             ></div>
 
             {/* Camada de gradiente sobre a imagem */}

@@ -152,18 +152,18 @@ export default function Galeria() {
     const openLightbox = (index) => setLightboxIndex(index + globalOffset);
 
     return (
-        <section id="galeria" className="w-full py-12 bg-gradient-to-b from-white/80 to-blue-50/60">
+        <section id="galeria" className="w-full py-12 pt-28 bg-gradient-to-b from-white/80 to-blue-50/60">
             {/* Estilo customizado para as setas do Swiper */}
             <style>{swiperArrowStyle}</style>
             <div className="max-w-6xl mx-auto px-4">
                 <h2 className="text-3xl font-bold text-primary text-center mb-8 drop-shadow">Galeria</h2>
 
-                {/* Abas de categorias */}
-                <div className="flex flex-wrap justify-center gap-2 mb-8">
+                {/* Abas de categorias - Layout 2x2 mais harmônico */}
+                <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto mb-8 md:gap-4">
                     {categorias.map((cat, idx) => (
                         <button
                             key={cat.nome}
-                            className={`px-4 py-2 rounded-full font-semibold text-sm transition-all duration-200 shadow-sm border 
+                            className={`px-4 py-3 rounded-full font-semibold text-sm transition-all duration-200 shadow-sm border text-center
                                 ${idx === categoriaSelecionada ? 'bg-primary text-white border-primary' : 'bg-white/80 text-primary border-primary/30 hover:bg-primary/10'}`}
                             onClick={() => setCategoriaSelecionada(idx)}
                         >
@@ -195,7 +195,9 @@ export default function Galeria() {
                                     src={img.src}
                                     alt={img.alt}
                                     className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                                    loading="lazy"
+                                    loading={idx < 3 ? "eager" : "lazy"}
+                                    decoding="async"
+                                    fetchpriority={idx < 3 ? "high" : "auto"}
                                 />
                             </div>
                         </SwiperSlide>

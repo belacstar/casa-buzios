@@ -35,7 +35,7 @@ function Home() {
 
 
     return (
-        <section className="px-4 pt-24 pb-16 text-textPrimary">
+        <section className="px-4 pt-28 pb-16 text-textPrimary">
             {/* Apresentação aprimorada */}
             <div className="flex justify-center mb-16 animate-fade-in">
                 <div className="bg-white/70 backdrop-blur-sm border border-white/40 shadow-xl rounded-3xl px-8 py-10 max-w-2xl text-center space-y-4">
@@ -123,6 +123,9 @@ function Home() {
                                     src={img}
                                     alt={`Slide ${index}`}
                                     className="object-cover w-full h-full rounded-xl shadow-lg"
+                                    loading={index === 0 ? "eager" : "lazy"}
+                                    fetchpriority={index === 0 ? "high" : "auto"}
+                                    decoding="async"
                                 />
                             </div>
                         ))}
